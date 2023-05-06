@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AdminPage from "./pages/AdminPage";
+import "./styles/global.css";
+import { useState, useEffect } from "react";
+import { LoginContext } from "./contexts";
+import { getUser } from "./firebase/controllers";
+import MyOrders from "./components/MyOrders";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("bkuserid");
+    if (!user && storedUser) {
+      getUser(setUser)
+    }
+    else if (user && !storedUser) localStorage.setItem("bkuserid", user.uid);
+    else if (!user && storedUser) localStorage.removeItem("bkuserid");
+    
+  }, [user]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <LoginContext.Provider value={{ user, setUser }}>
+      <Routes>
+        <Route path="/" Component={HomePage} />
+        <Route path="/myorders" Component={MyOrders} />
+        <Route
+          path="/admin"
+          Component={
+            AdminPage
+          }
+        />
+      </Routes>
+    </LoginContext.Provider>
+  );
 }
 
-export default App
+
+
+export default App;

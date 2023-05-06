@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+*,
+html {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+}
+
+.title {
+  font-family: Times, "Times New Roman", Times, serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: fit-content;
+}
+.flex {
+  display: flex;
+}
+
+.sb {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: rgb(136, 136, 136);
+  display: flex;
+  align-items: center;
+  gap:5px;
+}
+.muted {
+  color: gray;
+}
+
+.banner {
+  padding: 50px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image: radial-gradient(#b150d6 0.5px, #e5e5f7 0.5px);
+  background-size: 10px 10px;
+}
+
+.banner h1 {
+  font-family: "Times New Roman", Times, serif;
+  text-transform: uppercase;
+  color: #4d056a;
+  font-weight: bold;
+}
+
+.banner .description {
+  max-width: 1000px;
+  color: #333436;
+}
+
+.about {
+  padding: 50px 0;
+}
+
+.about h1 {
+  font-family: Times, "Times New Roman", Times, serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: fit-content;
+  border-bottom: 5px solid transparent;
+
+  transition: 150ms all ease-in;
+}
+
+.about h1:hover {
+  border-bottom: 5px solid #b150d6;
+}
+
+.about .works,
+.admin .works {
+  height: 200px;
+}
+
+/* services */
+.services {
+  padding: 50px 0;
+  color: #fff;
+  background-color: #4d056a;
+}
+
+.service-card {
+  position: relative;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.service-card:hover {
+  opacity: 0.8;
+}
+
+.service-card:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #b150d6;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.orders {
+  padding: 50px 0;
+}
+
+.admin .title {
+  font-size: 30px;
+}
+
+.admin-services {
+  padding: 50px 0;
+}
+
+.admin-works {
+  padding: 50px 0;
+}
+
+.footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4d056a;
+  color: #fff;
+  text-align: center;
+}
+
+
+/* media queries */
+@media screen and (max-width: 768px) {
+  .navbrand-lg {
+    display: none;
+  }
+  .navbrand-sm {
+    display: block;
+  }
+  .footer{
+    font-size: 12px;
+  }
+  .banner{
+  margin-top: 50px;
+
+  }
+}
+@media screen and (min-width: 768px) {
+  .navbrand-lg {
+    display: block;
+  }
+  .navbrand-sm {
+    display: none;
+  }
+
+  .navbar-nav{
+    gap: 20px
+  }
+
+  .navbar .navbar-nav .nav-link:hover {
+    transform: scale(1.1, 1.1);
+    color: #533537;
+  }
+  .navbar .navbar-nav .nav-link {
+    transition: 100ms all ease-in;
+  }
+  .banner{
+    margin-top:120px
+  }
+}
