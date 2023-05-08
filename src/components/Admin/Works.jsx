@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import { addWork } from "../../firebase/controllers";
 import { WorksMarquee } from "../About";
+import toast, { Toaster } from "react-hot-toast";
 
 const Works = () => {
   const [show, setShow] = useState(false);
@@ -20,6 +21,7 @@ const Works = () => {
   const callBack = () => {
     setLoader(false);
     setFile(null);
+    toast('Added your work')
     handleClose();
   };
 
@@ -31,6 +33,7 @@ const Works = () => {
   };
   return (
     <div className="admin-works">
+      <Toaster />
       <Container>
         <div className="flex sb">
           <h1 className="title">My Works</h1>
@@ -38,7 +41,7 @@ const Works = () => {
             Add Image
           </Button>
         </div>
-        <Row className="gx-10 mt-5" >
+        <Row className="gx-10 mt-5">
           <WorksMarquee />
         </Row>
       </Container>

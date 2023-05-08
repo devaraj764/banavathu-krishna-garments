@@ -20,6 +20,7 @@ import {
 } from "@firebase/firestore";
 import { firestore } from "../../firebase";
 // import {sendMail} from "../../services/mailer";
+import toast, { Toaster } from "react-hot-toast";
 
 const getUserData = async (uid) => {
   try {
@@ -83,6 +84,8 @@ const Orders = () => {
         status: 1,
         acceptedTimestamp: serverTimestamp(),
       });
+      toast("Order Accepted");
+      getOrders()
       // await sendMail({ user, subject: "Order Accepted", orderId: docid });
     } catch (err) {
       console.error(err);
@@ -96,6 +99,8 @@ const Orders = () => {
         status: -1,
         rejectedTimestamp: serverTimestamp(),
       });
+      toast("Order Rejected");
+      getOrders()
       // await sendMail({ user, subject: "Order Rejected", orderId: docid });
     } catch (err) {
       console.error(err);
@@ -109,6 +114,8 @@ const Orders = () => {
         status: 2,
         completedTimestamp: serverTimestamp(),
       });
+      toast("Order Completed");
+      getOrders()
       // await sendMail({ user, subject: "Order Completed", orderId: docid });
     } catch (err) {
       console.error(err);
@@ -118,12 +125,11 @@ const Orders = () => {
   return (
     <div className="orders">
       <Container>
-        <div className="flex sb">
-          <div className="flex sb">
-            <h1 className="title">Orders</h1>
-            <Button onClick={getOrders}>Reload Orders</Button>
-          </div>
+        <div className="flex sb" style={{ width: "100%" }}>
+          <h1 className="title">Orders</h1>
+          <Button onClick={getOrders}>Reload Orders</Button>
         </div>
+        <br />
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
@@ -174,7 +180,7 @@ const Orders = () => {
                   {item.status === 1 && (
                     <Button
                       size="sm"
-                      bg="success"
+                      variant="success"
                       onClick={() => completeOrder(item.id)}
                     >
                       Complete
@@ -191,6 +197,7 @@ const Orders = () => {
         show={userModal}
         handleClose={handleUserModalClose}
       />
+      <Toaster />
     </div>
   );
 };

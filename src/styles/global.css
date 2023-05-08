@@ -83,6 +83,10 @@ a{
   border-bottom: 5px solid #b150d6;
 }
 
+.admin{
+  padding-top: 50px
+}
+
 .about .works,
 .admin .works {
   height: 200px;

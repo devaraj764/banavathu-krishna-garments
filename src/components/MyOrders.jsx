@@ -3,40 +3,32 @@ import { getDocs, collection, query, where } from "@firebase/firestore";
 import { firestore } from "../firebase";
 import { useContext } from "react";
 import { LoginContext } from "../contexts";
-import {
-  Container,
-  Table,
-  Modal,
-  Badge,
-  Image,
-  Button,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Container, Table, Badge, Button } from "react-bootstrap";
 import { BiHomeAlt2 } from "react-icons/bi";
 
 const MyOrders = () => {
   const { user, setUser } = useContext(LoginContext);
   const [list, setList] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     if (user) getOrders(user.uid);
-  }, []);
+  }, [user]);
 
   const getOrders = async (uid) => {
     const q = query(
       collection(firestore, "orders"),
       where("clientUid", "==", uid)
-      );
-      console.log(uid);
+    );
     const docs = await getDocs(q);
     if (docs.docs.length !== 0) {
-      setList([])
+      setList([]);
       docs.docs.forEach((item) => {
         const data = { ...item.data(), id: item.id };
         setList((prev) => [...prev, data]);
       });
     }
+    setLoader(false);
   };
   return (
     <Container style={{ marginTop: "50px" }}>
@@ -68,15 +60,17 @@ const MyOrders = () => {
           </tr>
         </thead>
         <tbody>
-          {list.length > 0 &&
+          {loader ? (
+            <tr>
+              <td colSpan={4}>Loading...</td>
+            </tr>
+          ) : (
+            list.length > 0 &&
             list?.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.serviceTitle}</td>
-                <td
-                >
-                  {Date(item.timestamp)}
-                </td>
+                <td>{Date(item.timestamp)}</td>
                 <td>
                   {item.status === 0 && <Badge bg="warning">Placed</Badge>}
                   {item.status === 1 && <Badge bg="primary">Accepted</Badge>}
@@ -84,7 +78,8 @@ const MyOrders = () => {
                   {item.status === -1 && <Badge bg="danger">Rejected</Badge>}
                 </td>
               </tr>
-            ))}
+            ))
+          )}
         </tbody>
       </Table>
     </Container>
