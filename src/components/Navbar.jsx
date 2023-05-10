@@ -59,6 +59,8 @@ const NavbarComponent = ({ setPage }) => {
                     <NavDropdown.Item href="/myorders">
                       My Orders
                     </NavDropdown.Item>
+                    <NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
+
                     <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 </Nav>

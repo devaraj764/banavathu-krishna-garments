@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getDocs, collection, query, where } from "@firebase/firestore";
+import { getDocs, collection, query, where, orderBy, limit} from "@firebase/firestore";
 import { firestore } from "../firebase";
 import { useContext } from "react";
 import { LoginContext } from "../contexts";
@@ -18,7 +18,9 @@ const MyOrders = () => {
   const getOrders = async (uid) => {
     const q = query(
       collection(firestore, "orders"),
-      where("clientUid", "==", uid)
+      where("clientUid", "==", uid),
+      // orderBy("datetime", "desc"),
+      // limit(10)
     );
     const docs = await getDocs(q);
     if (docs.docs.length !== 0) {

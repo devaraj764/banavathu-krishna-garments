@@ -24,12 +24,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const getUserData = async (uid) => {
   try {
-    const q = query(
-      collection(firestore, "users"),
-      where("uid", "==", uid),
-      orderBy("datetime", "desc"),
-      limit(10)
-    );
+    const q = query(collection(firestore, "users"), where("uid", "==", uid));
     const docs = await getDocs(q);
     if (docs.docs.length !== 0) {
       return docs.docs[0].data();
@@ -47,7 +42,11 @@ const Orders = () => {
   const [userModal, setUserModal] = useState(false);
   const [user, setUser] = useState(null);
 
-  const q = query(collection(firestore, "orders"));
+  const q = query(
+    collection(firestore, "orders"),
+    // orderBy("datetime", "desc"),
+    // limit(10)
+  );
 
   const handleUserModalClose = () => {
     setUserModal(false);
@@ -85,7 +84,7 @@ const Orders = () => {
         acceptedTimestamp: serverTimestamp(),
       });
       toast("Order Accepted");
-      getOrders()
+      getOrders();
       // await sendMail({ user, subject: "Order Accepted", orderId: docid });
     } catch (err) {
       console.error(err);
@@ -100,7 +99,7 @@ const Orders = () => {
         rejectedTimestamp: serverTimestamp(),
       });
       toast("Order Rejected");
-      getOrders()
+      getOrders();
       // await sendMail({ user, subject: "Order Rejected", orderId: docid });
     } catch (err) {
       console.error(err);
@@ -115,7 +114,7 @@ const Orders = () => {
         completedTimestamp: serverTimestamp(),
       });
       toast("Order Completed");
-      getOrders()
+      getOrders();
       // await sendMail({ user, subject: "Order Completed", orderId: docid });
     } catch (err) {
       console.error(err);
