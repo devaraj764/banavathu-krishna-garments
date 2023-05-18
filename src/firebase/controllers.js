@@ -38,8 +38,7 @@ export const signInWithGoogle = async (setUser) => {
             setUser(docs.docs[0].data())
         }
     } catch (err) {
-        console.error(err);
-        alert(err.message);
+        console.error(err.message);
     }
 };
 

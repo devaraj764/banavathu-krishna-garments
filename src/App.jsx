@@ -5,7 +5,7 @@ import "./styles/global.css";
 import { useState, useEffect } from "react";
 import { LoginContext } from "./contexts";
 import { getUser } from "./firebase/controllers";
-import MyOrders from "./components/MyOrders";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,6 +27,12 @@ function App() {
         <Route path="/myorders" Component={MyOrders} />
         <Route
           path="/admin"
+          Component={
+            AdminPage
+          }
+        />
+        <Route
+          path="/admin/:page"
           Component={
             AdminPage
           }

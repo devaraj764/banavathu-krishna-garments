@@ -33,7 +33,7 @@ const NavbarComponent = ({ setPage }) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#home">
+            <Nav.Link href="/#home">
               <AiFillHome size={20} /> Home
             </Nav.Link>
             <Nav.Link href="#about">
@@ -56,10 +56,13 @@ const NavbarComponent = ({ setPage }) => {
                     }
                     menuVariant="dark"
                   >
-                    <NavDropdown.Item href="/myorders">
-                      My Orders
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
+                    {user.uid == "qlgQG3zngBSD3DX6M8iDuoSLDyF3" ? (
+                      <NavDropdown.Item href="/admin">Admin</NavDropdown.Item>
+                    ) : (
+                      <NavDropdown.Item href="/myorders">
+                        My Orders
+                      </NavDropdown.Item>
+                    )}
 
                     <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>

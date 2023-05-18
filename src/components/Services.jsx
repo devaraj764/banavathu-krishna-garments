@@ -18,6 +18,7 @@ import { firestore } from "../firebase";
 import { LoginContext } from "../contexts";
 import { placeOrder, signInWithGoogle } from "../firebase/controllers";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
   return (
@@ -68,19 +69,24 @@ const ServiceCard = ({ data }) => {
 const ServiceModal = ({ data, show, setShow }) => {
   const { user, setUser } = useContext(LoginContext);
   const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setShow(false);
   };
 
-  const callBack = () => {
+  const callBack = async () => {
     setLoader(false);
     toast("Order Placed");
     handleClose();
+    navigate("./myorders");
   };
 
   const handleButton = () => {
-    if (!user) return signInWithGoogle(setUser);
+    if (!user) {
+      handleClose();
+      return signInWithGoogle(setUser);
+    }
     setLoader(true);
     const order = {
       clientName: user?.name,

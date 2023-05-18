@@ -8,7 +8,7 @@ import { Logout } from "../../firebase/controllers";
 import { LoginContext } from "../../contexts";
 import { useContext } from "react";
 
-const NavbarAdmin = ({ setComponent }) => {
+const NavbarAdmin = () => {
   const { setUser } = useContext(LoginContext);
 
   const logout = () => {
@@ -23,20 +23,20 @@ const NavbarAdmin = ({ setComponent }) => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto gap-5">
             <Nav.Link
-              onClick={() => setComponent("orders")}
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              href="/admin/orders"
             >
               <BsFillBoxFill size={20} /> Orders
             </Nav.Link>
             <Nav.Link
-              onClick={() => setComponent("works")}
+              href="/admin/works"
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
             >
               <SiCountingworkspro size={20} />
               Works
             </Nav.Link>
             <Nav.Link
-              onClick={() => setComponent("services")}
+              href="/admin/services"
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
             >
               <MdOutlineMiscellaneousServices size={22} />

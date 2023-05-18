@@ -8,24 +8,26 @@ import { LoginContext } from "../contexts";
 import { signInWithGoogle } from "../firebase/controllers";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { Toaster } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const AdminPage = () => {
   const { user } = useContext(LoginContext);
-  const [component, setComponent] = useState("orders");
+  const { page } = useParams();
+  console.log(page)
   return (
     <div className="admin">
       {user ? (
-        user.uid == "qlgQG3zngBSD3DX6M8iDuoSLDyF3" ? (
-          <>
-            <NavbarAdmin setComponent={setComponent} />
-            {component === "orders" && <Orders />}
-            {component === "works" && <Works />}
-            {component === "services" && <Services />}
-          </>
-        ) : (
-          <UnAuthorized />
-        )
+        // user.uid == "qlgQG3zngBSD3DX6M8iDuoSLDyF3" ? (
+        <>
+          <NavbarAdmin />
+          {(!page || page === "orders") && <Orders />}
+          {page === "works" && <Works />}
+          {page === "services" && <Services />}
+        </>
       ) : (
+        // ) : (
+        //   <UnAuthorized />
+        // )
         <GoogleLogin />
       )}
       <Toaster />

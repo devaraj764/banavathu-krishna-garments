@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
   Modal,
   Row,
+  Col,
   Form,
+  Image,
   ProgressBar,
 } from "react-bootstrap";
 import { addWork } from "../../firebase/controllers";
-import { WorksMarquee } from "../About";
 import toast, { Toaster } from "react-hot-toast";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { storage } from "../../firebase";
 
 const Works = () => {
   const [show, setShow] = useState(false);
@@ -18,10 +21,14 @@ const Works = () => {
   const [loader, setLoader] = useState(false);
   const [progress, setProgress] = useState(1);
 
+  const [images, setImages] = useState([]);
+  const storageRef = ref(storage, "works/");
+
   const callBack = () => {
     setLoader(false);
     setFile(null);
-    toast('Added your work')
+    toast("Added your work");
+    getImages();
     handleClose();
   };
 
@@ -31,6 +38,22 @@ const Works = () => {
     setLoader(true);
     await addWork(file, setProgress, callBack);
   };
+
+  useEffect(() => {
+    getImages();
+  }, []);
+
+  const getImages = ()=>{
+    listAll(storageRef).then((res) => {
+      res.items.forEach((item) => {
+        setImages([]);
+        getDownloadURL(item).then((url) => {
+          setImages((prev) => [...prev, url]);
+        });
+      });
+    });
+  }
+
   return (
     <div className="admin-works">
       <Toaster />
@@ -42,7 +65,11 @@ const Works = () => {
           </Button>
         </div>
         <Row className="gx-10 mt-5">
-          <WorksMarquee />
+          {images.map((url, index) => (
+            <Col key={index} md={4} sm={12} className="p-4 flex"style={{justifyContent:'center'}}>
+              <Image src={url} className="works" fluid />
+            </Col>
+          ))}
         </Row>
       </Container>
       <Modal show={show} onHide={handleClose} size="lg" centered>
